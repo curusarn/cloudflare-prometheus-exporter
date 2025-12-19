@@ -63,6 +63,8 @@ Set in `wrangler.jsonc` or via `wrangler secret put`:
 | `CF_ZONES` | - | Comma-separated zone IDs to include (default: all) |
 | `CF_FREE_TIER_ACCOUNTS` | - | Comma-separated account IDs using free tier (skips paid-tier metrics) |
 | `METRICS_PATH` | /metrics | Custom path for metrics endpoint |
+| `BASIC_AUTH_USER` | - | Username for basic auth (secret, requires `BASIC_AUTH_PASSWORD`) |
+| `BASIC_AUTH_PASSWORD` | - | Password for basic auth (secret, requires `BASIC_AUTH_USER`) |
 
 ### Creating an API Token
 
@@ -104,6 +106,31 @@ scrape_configs:
     static_configs:
       - targets: ['your-worker.your-subdomain.workers.dev']
 ```
+
+### With Basic Auth
+
+Set up basic auth to protect all endpoints:
+
+```bash
+wrangler secret put BASIC_AUTH_USER
+wrangler secret put BASIC_AUTH_PASSWORD
+```
+
+Then configure Prometheus:
+
+```yaml
+scrape_configs:
+  - job_name: 'cloudflare'
+    scrape_interval: 60s
+    scrape_timeout: 30s
+    basic_auth:
+      username: 'your-username'
+      password: 'your-password'
+    static_configs:
+      - targets: ['your-worker.your-subdomain.workers.dev']
+```
+
+**Note:** Both `BASIC_AUTH_USER` and `BASIC_AUTH_PASSWORD` must be set for basic auth to be enabled. If only one is set, a warning is logged and auth is disabled.
 
 ## Runtime Config API
 
