@@ -21,7 +21,7 @@ Export Cloudflare metrics to Prometheus. Built on Cloudflare Workers with Durabl
 
 ### One-Click Deploy
 
-Click the deploy button above. Configure `CLOUDFLARE_API_TOKEN` as a secret after deployment.
+Click the deploy button above. Configure `CLOUDFLARE_API_TOKEN` as a secret after deployment. Configure `BASIC_AUTH_USER` and `BASIC_AUTH_PASSWORD` to protect the exporter with HTTP Basic Auth.
 
 ### Manual Deployment
 
